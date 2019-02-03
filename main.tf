@@ -40,7 +40,7 @@ POLICY
 }
 
 resource "aws_lb" "this" {
-  name_prefix        = "${var.env}-"
+  name               = "${var.env}"
   internal           = false
   load_balancer_type = "application"
   security_groups    = ["${aws_security_group.this.id}"]
@@ -50,10 +50,6 @@ resource "aws_lb" "this" {
   access_logs {
     bucket  = "${aws_s3_bucket.this.bucket}"
     enabled = true
-  }
-
-  lifecycle {
-    create_before_destroy = true
   }
 }
 
