@@ -1,7 +1,7 @@
 data "aws_elb_service_account" "this" {}
 
 resource "aws_s3_bucket" "this" {
-  bucket_prefix = "${var.env}-alb-logs"
+  bucket_prefix = "${var.env}-alb-logs-"
   acl           = "private"
   tags          = "${merge(map("Name", "${var.env}"), var.tags)}"
 
@@ -15,7 +15,7 @@ resource "aws_s3_bucket" "this" {
         "s3:PutObject"
       ],
       "Effect": "Allow",
-      "Resource": "arn:aws:s3:::${var.env}-alb-logs/*",
+      "Resource": "arn:aws:s3:::${var.env}-alb-logs-*/*",
       "Principal": {
         "AWS": [
           "${data.aws_elb_service_account.this.arn}"
